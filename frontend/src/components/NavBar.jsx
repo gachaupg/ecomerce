@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { logoutUser } from "../slices/authSlice";
@@ -8,13 +8,13 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const { cartTotalQuantity } = useSelector((state) => state.cart);
   const auth = useSelector((state) => state.auth);
-
+   const navigate=useNavigate()
   console.log(auth);
 
   return (
     <nav className="nav-bar">
       <Link to="/">
-        <h2>OnlineShop</h2>
+        <h4>OnlineShop</h4>
       </Link>
       <Link to="/cart">
         <div className="nav-bag">
@@ -36,23 +36,33 @@ const NavBar = () => {
       {auth._id ? (
         <Links>
           {auth.isAdmin ? (
-            <div>
-              <Link to="/admin/summary">Admin</Link>
+            <>
+            {/* <div>
+              <Link to="/create-product">Post Products</Link>
+            </div> */}
+            <div style={{marginRight:'1rem'}}>
+              <Link  to="/admin/summary">Admin</Link>
             </div>
+            </>
           ) : null}
+         
           <div
+          style={{marginLeft:'1rem'}}
             onClick={() => {
               dispatch(logoutUser(null));
               toast.warning("Logged out!", { position: "bottom-left" });
+              navigate('/')
             }}
           >
             Logout
           </div>
+          <AuthLinks>
+          <Link to="/post">Post Your Items</Link>
+        </AuthLinks>
         </Links>
       ) : (
         <AuthLinks>
-          <Link to="/login">Login</Link>
-          <Link to="register">Register</Link>
+          <Link to="/login">Join Us</Link>
         </AuthLinks>
       )}
     </nav>

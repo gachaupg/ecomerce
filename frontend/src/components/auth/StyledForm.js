@@ -1,9 +1,14 @@
 import styled from "styled-components";
 
 export const StyledForm = styled.form`
-  max-width: 350px;
+display:flex;
+align-items:center;
+flex-direction:column;
+  max-width: 400px;
+  justify-content:center;
   width: 100%;
   margin: 2rem auto;
+  margin-top:6rem;
 
   h2 {
     margin-bottom: 1rem;
@@ -12,7 +17,7 @@ export const StyledForm = styled.form`
   button,
   input {
     height: 35px;
-    width: 100%;
+    width: 90%;
     padding: 7px;
     outline: none;
     border-radius: 5px;

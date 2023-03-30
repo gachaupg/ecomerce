@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./components/Home";
 import NavBar from "./components/NavBar";
 import NotFound from "./components/NotFound";
@@ -20,6 +20,10 @@ import Users from "./components/admin/Users";
 import Orders from "./components/admin/Oders";
 import Summary from "./components/admin/Summary";
 import CreateProduct from "./components/admin/CreateProduct";
+import SingleTour from "./components/SingleTour";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Post from "./components/Post";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +36,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <ToastContainer />
+        {/* <Header/> */}
         <NavBar />
         <div className="content-container">
           <Routes>
@@ -40,6 +45,7 @@ function App() {
             <Route path="/checkout-success" element={<CheckoutSuccess />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/post" element={<Post/>} />
             <Route path="/admin" element={<Dashboard />}>
               <Route path="summary" element={<Summary />} />
               <Route path="products" element={<Products />}>
@@ -48,10 +54,13 @@ function App() {
               <Route path="users" element={<Users />} />
               <Route path="orders" element={<Orders />} />
             </Route>
+          
             <Route path="*" element={<NotFound />} />
+                <Route path="/tour/:id" element={<SingleTour />} />
           </Routes>
         </div>
       </BrowserRouter>
+      <Footer/>
     </div>
   );
 }

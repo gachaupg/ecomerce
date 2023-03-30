@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../slices/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { StyledForm } from "./StyledForm";
 
 const Login = () => {
@@ -16,7 +16,7 @@ const Login = () => {
 
   useEffect(() => {
     if (auth._id) {
-      navigate("/cart");
+      navigate("/");
     }
   }, [auth._id, navigate]);
 
@@ -45,6 +45,9 @@ const Login = () => {
           {auth.loginStatus === "pending" ? "Submitting..." : "Login"}
         </button>
         {auth.loginStatus === "rejected" ? <p>{auth.loginError}</p> : null}
+      <p>if no account <Link to='/register'>
+        Register here
+        </Link></p>
       </StyledForm>
     </>
   );

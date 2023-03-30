@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { PrimaryButton } from "./CommonStyled";
 import { productsCreate } from "../../slices/productsSlice";
-
+// import {Geocoder} from 'geocoder'
 const CreateProduct = () => {
+  
   const dispatch = useDispatch();
   const { createStatus } = useSelector((state) => state.products);
 
@@ -14,7 +15,14 @@ const CreateProduct = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [desc, setDesc] = useState("");
-
+  const [No, setNo] = useState("");
+  const [location, setLocation] = useState("");
+  const [ram, setRam] = useState("");
+  const [rom, setRom] = useState("");
+  const [battery, setBattery] = useState("");
+  const [camera, setCamera] = useState("");
+  const [os, setOs] = useState("");
+  const [sim, setSim] = useState("");
   const handleProductImageUpload = (e) => {
     const file = e.target.files[0];
 
@@ -43,7 +51,15 @@ const CreateProduct = () => {
         brand,
         price,
         desc,
+        No,
+        location,
         image: productImg,
+        ram,
+        rom,
+        battery,
+        camera,
+        os,
+        sim,
       })
     );
   };
@@ -60,15 +76,18 @@ const CreateProduct = () => {
           required
         />
         <select onChange={(e) => setBrand(e.target.value)} required>
-          <option value="">Select Brand</option>
-          <option value="iphone">iPhone</option>
-          <option value="samsung">Samsung</option>
+          <option value="">Select Category</option>
+          <option value="iphone">Iphone</option>
+          <option value="samsung">Sumsung</option>
+          <option value="huawei">Huawei</option>
           <option value="xiomi">Xiomi</option>
+          <option value="techno">Techno</option>
+          <option value="nokia">Nokia</option>
           <option value="other">Other</option>
         </select>
         <input
           type="text"
-          placeholder="Name"
+          placeholder="Title of the phone"
           onChange={(e) => setName(e.target.value)}
           required
         />
@@ -76,6 +95,42 @@ const CreateProduct = () => {
           type="number"
           placeholder="Price"
           onChange={(e) => setPrice(e.target.value)}
+          
+        />
+         <input
+          type="text"
+          placeholder="ram of the phone"
+          onChange={(e) => setRam(e.target.value)}
+          required
+        />
+      <input
+          type="text"
+          placeholder="internal storage"
+          onChange={(e) => setRom(e.target.value)}
+          required
+        />
+         <input
+          type="text"
+          placeholder="battery capacity"
+          onChange={(e) => setBattery(e.target.value)}
+          required
+        />
+         <input
+          type="text"
+          placeholder="camera"
+          onChange={(e) => setCamera(e.target.value)}
+          required
+        />
+         <input
+          type="text"
+          placeholder=" OS"
+          onChange={(e) => setOs(e.target.value)}
+          required
+        />
+      <input
+          type="text"
+          placeholder="simcard"
+          onChange={(e) => setSim(e.target.value)}
           required
         />
         <input
@@ -84,10 +139,23 @@ const CreateProduct = () => {
           onChange={(e) => setDesc(e.target.value)}
           required
         />
+         <input
+          type="number"
+          placeholder="Phone Number"
+          onChange={(e) => setNo(e.target.value)}
+          
+        />
+         <input
+          type="text"
+          placeholder="Location"
+          onChange={(e) => setLocation(e.target.value)}
+          required
+        />
+      
 
-        <PrimaryButton type="submit">
+        <button type="submit">
           {createStatus === "pending" ? "Submitting" : "Submit"}
-        </PrimaryButton>
+        </button>
       </StyledForm>
       <ImagePreview>
         {productImg ? (
@@ -100,6 +168,7 @@ const CreateProduct = () => {
       </ImagePreview>
     </StyledCreateProduct>
   );
+        
 };
 
 export default CreateProduct;
@@ -107,7 +176,7 @@ export default CreateProduct;
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  max-width: 300px;
+  max-width: 250px;
   margin-top: 2rem;
 
   select,
@@ -131,14 +200,15 @@ const StyledForm = styled.form`
 
 const StyledCreateProduct = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  flex-wrap:wrap;
 `;
 
 const ImagePreview = styled.div`
   margin: 2rem 0 2rem 2rem;
   padding: 2rem;
   border: 1px solid rgb(183, 183, 183);
-  max-width: 300px;
+  max-width: 250px;
   width: 100%;
   display: flex;
   align-items: center;

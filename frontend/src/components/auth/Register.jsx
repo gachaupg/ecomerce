@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../slices/authSlice";
 import { StyledForm } from "./StyledForm";
@@ -17,7 +17,7 @@ const Register = () => {
 
   useEffect(() => {
     if (auth._id) {
-      navigate("/cart");
+      navigate("/login");
     }
   }, [auth._id, navigate]);
 
@@ -53,6 +53,10 @@ const Register = () => {
         {auth.registerStatus === "rejected" ? (
           <p>{auth.registerError}</p>
         ) : null}
+
+<p>if have account <Link to='/login'>
+       Login
+        </Link></p>
       </StyledForm>
     </>
   );

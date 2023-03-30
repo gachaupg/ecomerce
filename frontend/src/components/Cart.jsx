@@ -116,6 +116,13 @@ const Cart = () => {
                   Login to Check out
                 </button>
               )}
+              <a href="https://tinypesa.com/petergachau">
+                <button style={{marginTop:'1rem', backgroundColor:'red'}}>
+                Pay Via Mpesa
+  
+              </button>
+              </a>
+                  
 
               <div className="continue-shopping">
                 <Link to="/">

@@ -1,18 +1,19 @@
 const { Product } = require("../models/Product");
-const { auth, isUser, isAdmin } = require("../middleware/auth");
+const {auth1 , isUser, isAdmin } = require("../middleware/auth");
+const { auth } = require("../middleware/auth1");
 const cloudinary = require("../utils/cloudinary");
 
 const router = require("express").Router();
 
 //CREATE
 
-router.post("/", isAdmin, async (req, res) => {
-  const { name, brand, desc, price, image } = req.body;
+router.post('/',async(req,res)=>{
+  const { name, brand, desc, price,ram,rom,battery,camera,os,sim, image,No,location } = req.body;
 
   try {
     if (image) {
       const uploadedResponse = await cloudinary.uploader.upload(image, {
-        upload_preset: "online-shop",
+        upload_preset: "peter-main",
       });
 
       if (uploadedResponse) {
@@ -21,7 +22,18 @@ router.post("/", isAdmin, async (req, res) => {
           brand,
           desc,
           price,
+          No,
+          location,
           image: uploadedResponse,
+          creator: req.userId,
+          ram,
+          rom,
+          battery,
+          camera,
+          os,
+          sim,
+          
+
         });
 
         const savedProduct = await product.save();
@@ -32,11 +44,11 @@ router.post("/", isAdmin, async (req, res) => {
     console.log(error);
     res.status(500).send(error);
   }
-});
+})
 
 //DELETE
 
-router.delete("/:id", isAdmin, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.status(200).send("Product has been deleted...");
@@ -79,7 +91,7 @@ router.get("/find/:id", async (req, res) => {
 
 //UPDATE
 
-router.put("/:id", isAdmin, async (req, res) => {
+router.put("/:id",  async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
@@ -93,5 +105,14 @@ router.put("/:id", isAdmin, async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+router.get('/:id' ,  async(req,res)=>{
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: "User doesn't exist" });
+  }
+  const userTours = await TourModal.find({ creator: id });
+  res.status(200).json(userTours);
+})
 
 module.exports = router;

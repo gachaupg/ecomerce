@@ -1,14 +1,48 @@
 const { Order } = require("../models/Order");
-const { auth, isUser, isAdmin } = require("../middleware/auth");
+const { auth1, isUser, isAdmin } = require("../middleware/auth");
+const moment = require('moment')
 
 const router = require("express").Router();
+
+
+
+router.get ('/stats' ,async (req,res)=>{
+  const previosMonth=moment()
+  .month(moment().month()-1)
+  .set('date',1)
+  .format('YYYY-MM-DD HH:mm:ss');
+  // res.status(200).send(previosMonth)
+  try {
+      const users= await Order.aggregate([
+          {$match:{createdAt:{$gte:new Date(previosMonth)}},
+      
+      },
+      {
+          $project:{
+          month:{$month: '$createdAt'},
+      } 
+      },
+      {
+          $group:{
+              _id:'$month',
+              total:{$sum:1},
+          }
+      }
+     
+      ]);
+      res.status(200).send(users);
+  } catch (error) {
+      console.log(error);
+      res.status(500).send(error)
+  }
+})
 
 //CREATE
 
 // createOrder is fired by stripe webhook
 // example endpoint
 
-router.post("/", auth, async (req, res) => {
+router.post("/", auth1, async (req, res) => {
   const newOrder = new Order(req.body);
 
   try {
